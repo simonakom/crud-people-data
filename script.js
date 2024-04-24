@@ -173,7 +173,7 @@ function generateTableContent (people){
         </tr>`;
     }
     const tbody = document.querySelector(`table tbody`)
-    tbody.innerHTML = dynamicHTML;
+    tbody.innerHTML += dynamicHTML;
 }
 
 // ------------------------------MODAL-------------------------------// 
