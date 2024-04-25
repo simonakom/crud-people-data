@@ -27,7 +27,7 @@ input, .photoLink {
     max-width: 15% !important;
     overflow: hidden;
 }
-.butn {
+.butn, #close-button {
     color: rgb(255, 255, 255);
     background-color: rgba(123, 35, 116, 0.557);
     border: none;
@@ -36,7 +36,7 @@ input, .photoLink {
     width: 100%;
     max-width: 40%;
 }
-.butn:hover {
+.butn:hover, #close-button:hover {
     color: rgb(255, 255, 255);
     background-color: rgba(123, 35, 116, 0.557);
     border: none; 

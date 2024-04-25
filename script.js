@@ -204,7 +204,7 @@ const showModal = (num) => {
         <div class="row">
             <span class="fw-bold bio">${person.firstName} ${person.lastName} - ${person.age} years, ${person.nationality} </span>
         </div>
-        <button id="close-button" type="button" class="btn btn-primary butn my-3 py-2 px-5" onclick="modalElement.close()">Close</button>
+        <button id="close-button" type="button" class="btn btn-light butn my-3 py-2 px-5" onclick="modalElement.close()">Close</button>
     </div> </div>`
     modalElement.innerHTML = dynamicHTML
     document.querySelector("#modalBody").onclick = (event) => {
