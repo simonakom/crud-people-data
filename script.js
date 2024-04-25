@@ -132,7 +132,7 @@ buttonElement.addEventListener("click", ()=> {
    };
    imageElement.onload = function() {
        if (imageElement.width < 400 || imageElement.height < 400 || imageElement.width > 1000 || imageElement.height > 1000 ) {
-           addResult.innerText = "Image should be minimum 500x500px and maximum 1000x1000px";
+           addResult.innerText = "Image should be minimum 400x400px and maximum 1000x1000px";
            addResult.style.backgroundColor = '#cf7a847f';
            addResult.style.display = 'block';
        } else {
@@ -370,7 +370,7 @@ updateElement.addEventListener("click", () => {
      };
      imageElement.onload = function() {
          if (imageElement.width < 400 || imageElement.height < 400 || imageElement.width > 1000 || imageElement.height > 1000) {
-             updateResult.innerText = "Image should be minimum 500x500px and maximum 1000x1000px";
+             updateResult.innerText = "Image should be minimum 400x400px and maximum 1000x1000px";
              updateResult.style.backgroundColor = '#cf7a847f';
              updateResult.style.display = 'block';
          } else {
