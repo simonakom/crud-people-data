@@ -1,7 +1,6 @@
 body {
     background-color: rgba(218, 215, 220, 0.249);
 }
-
 img {
     width: 10%;
 }
@@ -45,8 +44,7 @@ input, .photoLink {
     transition: transform 0.9s ease-in-out;
     opacity: 0.8;
 } 
-.butn:active,
-.butn:focus {
+.butn:active {
     background-color: rgba(161, 83, 104, 0.615)!important;
     color: rgb(255, 255, 255)!important;
 }
@@ -83,6 +81,9 @@ input, .photoLink {
     padding: 12px !important;
     overflow: hidden;
 }
+.table-light {
+    cursor:none;
+}
 #update-form {
     display: none;
 }
@@ -99,7 +100,7 @@ input, .photoLink {
     background-color:  rgb(216, 211, 215);
 }
 .celebrityImage {
-    width: 30%;
+    width: 70%;
 }
 span {
     font-size: 13px;

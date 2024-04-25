@@ -76,7 +76,7 @@ location.reload();
 
 // -----------------------------CREATE-------------------------------// 
 //When "Add" is pressed
-buttonElement.addEventListener("click", ()=>{
+buttonElement.addEventListener("click", ()=> {
     //When the "Add" button is clicked, a new person object is created from the form inputs.
     const person = {};
     person.firstName = document.getElementById(`firstNameInput`).value;
@@ -123,39 +123,55 @@ buttonElement.addEventListener("click", ()=>{
         addResult.style.display = 'none';
     }
 
-// Validations: Duplicate person check is performed based on contact details.
-const duplicatePerson = people.find((existingPerson) =>
-    existingPerson.firstName.toLowerCase() === person.firstName.toLowerCase() &&
-    existingPerson.lastName.toLowerCase() === person.lastName.toLowerCase()
-);
-if (duplicatePerson) {
-    addResult.innerText = `A person with the same contact details already exists!`;
-    addResult.style.display = 'block';
-    addResult.style.backgroundColor = '#cf7a847f';
-    return;
-}
-                    // *disabeled as after deleting 2no. contact, new contact should be have 2id but it has 3id. Numeration is wrong: 1,3,4,5... Instead using (person.number = people.length + 1).
-                    // *person.number = currentNumeration; // assigns a number property to the person object.
-                    // *currentNumeration++; // After assigning the number to the current person, currentNumeration is incremented by 1.
-                    // localStorage.setItem("currentNumeration", "" + currentNumeration );
+   // Validate image URL
+   const imageElement = new Image();
+   imageElement.onerror = function() {
+       addResult.innerText = "Invalid image URL";
+       addResult.style.backgroundColor = '#cf7a847f';
+       addResult.style.display = 'block';
+   };
+   imageElement.onload = function() {
+       if (imageElement.width < 400 || imageElement.height < 400 || imageElement.width > 1000 || imageElement.height > 1000 ) {
+           addResult.innerText = "Image should be minimum 500x500px and maximum 1000x1000px";
+           addResult.style.backgroundColor = '#cf7a847f';
+           addResult.style.display = 'block';
+       } else {
+           // Validations: Duplicate person check is performed based on contact details.
+           const duplicatePerson = people.find((existingPerson) =>
+               existingPerson.firstName.toLowerCase() === person.firstName.toLowerCase() &&
+               existingPerson.lastName.toLowerCase() === person.lastName.toLowerCase()
+           );
+           if (duplicatePerson) {
+               addResult.innerText = `A person with the same contact details already exists!`;
+               addResult.style.display = 'block';
+               addResult.style.backgroundColor = '#cf7a847f';
+               return;
+           }
+                                // *disabeled as after deleting 2no. contact, new contact should be have 2id but it has 3id. Numeration is wrong: 1,3,4,5... Instead using (person.number = people.length + 1).
+                                // *person.number = currentNumeration; // assigns a number property to the person object.
+                                // *currentNumeration++; // After assigning the number to the current person, currentNumeration is incremented by 1.
+                                // localStorage.setItem("currentNumeration", "" + currentNumeration );
 
-// This will assign a unique number to each person based on the length of the people array. The +1 is added because array indices start from 0, but you want to display a human-readable number starting from 1.
-person.number = people.length + 1;
+           // This will assign a unique number to each person based on the length of the people array. The +1 is added because array indices start from 0, but you want to display a human-readable number starting from 1.
+           person.number = people.length + 1;
 
-// If all checks pass, the person object is added to people array, and the table (generateTableContent) is updated.
-people.push(person);
+           // If all checks pass, the person object is added to people array, and the table (generateTableContent) is updated.
+           people.push(person);
 
-    addResult.style.display = 'block';
-    addResult.innerText = 'New Person has been successfully added!';
-    addResult.style.backgroundColor = '#1a995750';
-    addResult.style.padding = '10px';
+           addResult.style.display = 'block';
+           addResult.innerText = 'New Person has been successfully added!';
+           addResult.style.backgroundColor = '#1a995750';
+           addResult.style.padding = '10px';
 
-generateTableContent (people); //calls the generateTableContent function, passing the updated people array as an argument. The purpose of this function is to generate HTML content for displaying the list of people in a table. 
-formElement.reset(); //resets the form (formElement) after adding a person. It clears the input fields in the form.
-         
-//When the array itself is updated - the localstorage data must be updated 
-localStorage.setItem("people", JSON.stringify(people));
-}); 
+           generateTableContent(people); // Calls the generateTableContent function, passing the updated people array as an argument.
+           formElement.reset(); // Resets the form after adding a person. It clears the input fields in the form.
+
+           // Update local storage
+           localStorage.setItem("people", JSON.stringify(people));
+       }
+   };
+   imageElement.src = person.image;
+});
 
 // -----------------------------READ-------------------------------// 
 // displaying the list of people in a table
@@ -173,7 +189,7 @@ function generateTableContent (people){
         </tr>`;
     }
     const tbody = document.querySelector(`table tbody`)
-    tbody.innerHTML += dynamicHTML;
+    tbody.innerHTML = dynamicHTML;
 }
 
 // ------------------------------MODAL-------------------------------// 
@@ -309,7 +325,7 @@ updateElement.addEventListener("click", () => {
     // console.log (updatedPerson);
 
    //Validation
-    if (!updatedPerson.firstName || !updatedPerson.lastName || !updatedPerson.age || !updatedPerson.nationality) {
+    if (!updatedPerson.firstName || !updatedPerson.lastName || !updatedPerson.age || !updatedPerson.nationality ||  !updatedPerson.image ) {
         updateResult.innerText = "Something is missing. Please fill in the complete form!";
         updateResult.style.backgroundColor = '#cf7a847f';
         updateResult.style.display = 'block';
@@ -345,43 +361,62 @@ updateElement.addEventListener("click", () => {
         updateResult.style.display = 'none';
     }
 
-    // Validations: Duplicate person check is performed based on contact details.
-    const duplicatePerson = people.find((existingPerson) =>
-    existingPerson.firstName.toLowerCase() === updatedPerson.firstName.toLowerCase() &&
-    existingPerson.lastName.toLowerCase() === updatedPerson.lastName.toLowerCase() &&
-    existingPerson.age === updatedPerson.age &&
-    existingPerson.nationality.toLowerCase() === updatedPerson.nationality.toLowerCase() &&
-    existingPerson.image.toLowerCase() === updatedPerson.image.toLowerCase()
-    );
-    
-    if (duplicatePerson) {
-        updateResult.innerText = 'Updated details match another existing contact!';
-        updateResult.style.backgroundColor = '#cf7a847f';
-        updateResult.style.display = 'block';
-        return;
-    } else {
-        updateResult.style.display = 'none';
-    }
-
-    // Update the person in the people array at the index foundIndexUpdate.
-    people[foundIndexUpdate] = updatedPerson;
-
-    updateResult.style.display = 'block';
-    updateResult.innerText = 'Person has been successfully updated!';
-    updateResult.style.backgroundColor = '#1a995750';
-
-    // Reset the form  (instead writing manually, use function)
-    nullifyInputValues()
-    // document.querySelector("#numberInputUpdate").value = "";
-    // document.getElementById("updateFirstNameInput").value = "";
-    // document.getElementById("updateLastNameInput").value = "";
-    // document.getElementById("updateAgeInput").value = "";
-    // document.getElementById("updateNationalityInput").value = "";
-
-    updateForm.style.display = 'none'; 
-    findElement.style.display = 'block'; 
-    updateElement.style.display = 'none'; 
-});
+     // Validate image URL
+     const imageElement = new Image();
+     imageElement.onerror = function() {
+         updateResult.innerText = "Invalid image URL";
+         updateResult.style.backgroundColor = '#cf7a847f';
+         updateResult.style.display = 'block';
+     };
+     imageElement.onload = function() {
+         if (imageElement.width < 400 || imageElement.height < 400 || imageElement.width > 1000 || imageElement.height > 1000) {
+             updateResult.innerText = "Image should be minimum 500x500px and maximum 1000x1000px";
+             updateResult.style.backgroundColor = '#cf7a847f';
+             updateResult.style.display = 'block';
+         } else {
+             // Validations: Duplicate person check is performed based on contact details.
+             const duplicatePerson = people.find((existingPerson) =>
+                 existingPerson.firstName.toLowerCase() === updatedPerson.firstName.toLowerCase() &&
+                 existingPerson.lastName.toLowerCase() === updatedPerson.lastName.toLowerCase() &&
+                 existingPerson.age === updatedPerson.age &&
+                 existingPerson.nationality.toLowerCase() === updatedPerson.nationality.toLowerCase() &&
+                 existingPerson.image.toLowerCase() === updatedPerson.image.toLowerCase()
+             );
+             
+             if (duplicatePerson) {
+                 updateResult.innerText = 'Updated details match another existing contact!';
+                 updateResult.style.backgroundColor = '#cf7a847f';
+                 updateResult.style.display = 'block';
+                 return;
+             } else {
+                 updateResult.style.display = 'none';
+             }
+ 
+             // Update the person in the people array at the index foundIndexUpdate.
+             people[foundIndexUpdate] = updatedPerson;
+ 
+             updateResult.style.display = 'block';
+             updateResult.innerText = 'Person has been successfully updated!';
+             updateResult.style.backgroundColor = '#1a995750';
+ 
+             // Reset the form  (instead writing manually, use function)
+             nullifyInputValues();
+             // document.querySelector("#numberInputUpdate").value = "";
+             // document.getElementById("updateFirstNameInput").value = "";
+             // document.getElementById("updateLastNameInput").value = "";
+             // document.getElementById("updateAgeInput").value = "";
+             // document.getElementById("updateNationalityInput").value = "";
+ 
+             updateForm.style.display = 'none'; 
+             findElement.style.display = 'block'; 
+             updateElement.style.display = 'none'; 
+ 
+             //When the array itself is updated - the localstorage data must be updated 
+             localStorage.setItem("people", JSON.stringify(people));
+         }
+     };
+     imageElement.src = updatedPerson.image;
+ });
 
 // ------------------------CLEAR INPUTS------------------------------// 
 function nullifyInputValues (){
@@ -398,3 +433,24 @@ function nullifyInputValues (){
         //When the array itself is updated - the localstorage data must be updated 
         localStorage.setItem("people", JSON.stringify(people));
 }
+
+// ------------------------HIDE NOTES when clicked------------------------------// 
+document.addEventListener("DOMContentLoaded", function () {
+    // Get the add-result, update-result, and delete-result paragraphs
+    const addResult = document.querySelector('.add-result');
+    const updateResult = document.querySelector('.update-result');
+    const deleteResult = document.querySelector('.delete-result');
+
+    function hideResult(result) {
+        result.style.display = 'none';
+    }
+    addResult.addEventListener('click', function () {
+        hideResult(addResult);
+    });
+    updateResult.addEventListener('click', function () {
+        hideResult(updateResult);
+    });
+    deleteResult.addEventListener('click', function () {
+        hideResult(deleteResult);
+    });
+});

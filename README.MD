@@ -6,6 +6,7 @@ Responsive CRUD data table created with javascript & bootstrap. Practising "DOM"
 
 
 <div style="text-align: center;">
-    <img src="./images/table.png" alt="table" style="border-radius: 10px; display: inline-block;" />
+    <img src="./images/main.png" alt="table" style="border-radius: 10px; display: inline-block;" />
+    <img src="./images/table.png" alt="modal" style="border-radius: 10px; display: inline-block;" />
     <img src="./images/modal.png" alt="modal" style="border-radius: 10px; display: inline-block;" />
 </div>
