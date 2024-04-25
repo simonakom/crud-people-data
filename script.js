@@ -436,7 +436,6 @@ function nullifyInputValues (){
 
 // ------------------------HIDE NOTES when clicked------------------------------// 
 document.addEventListener("DOMContentLoaded", function () {
-    // Get the add-result, update-result, and delete-result paragraphs
     const addResult = document.querySelector('.add-result');
     const updateResult = document.querySelector('.update-result');
     const deleteResult = document.querySelector('.delete-result');
