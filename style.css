@@ -1,3 +1,9 @@
+/* Add hover effect to table rows */
+.table-bordered tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+
 body {
     background-color: rgba(218, 215, 220, 0.249);
 }
@@ -156,3 +162,5 @@ span {
         margin-top: 20px;
     }
 }
+
+
