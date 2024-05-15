@@ -1,4 +1,4 @@
-# <span><img src="./images/celebrity.png" alt=star style="height: 1em; vertical-align: middle;"></span> Data-table of poeple  
+# <span><img src="./images/celebrity.png" alt=star style="height: 1em;"></span> Data-table of poeple  
 
 Responsive CRUD data table created with javascript & bootstrap. Practising "DOM", dynamic addition, update and removal of table elements, filtering function, validations, modal window implementation and local storage implementation.
 
